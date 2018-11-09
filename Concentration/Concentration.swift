@@ -20,6 +20,7 @@ class Concentration {
         if !cards[index].isMatched && !cards[index].isFaceUp {
             flipCount += 1
         }
+        //21321321
         
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {

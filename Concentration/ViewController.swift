@@ -12,8 +12,6 @@ class ViewController: UIViewController {
     
     @IBAction func newGame(_ sender: UIButton) {
         game.startNewGame()
-        game.flipCount = 0
-        game.score = 0
         updateViewFromModel()
     }
     

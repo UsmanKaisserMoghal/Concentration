@@ -70,6 +70,9 @@ class Concentration {
             cards[index].isSeen = false
         }
         
+        flipCount = 0
+        score = 0
+        
         cards.shuffle()
     }
     

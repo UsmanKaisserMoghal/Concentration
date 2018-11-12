@@ -12,6 +12,27 @@ class Concentration {
     
     var cards = [Card]()
     var indexOfOneAndOnlyFaceUpCard: Int?
+    {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp == true {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
+    
     var flipCount: Int
     var score: Int
     
@@ -28,15 +49,14 @@ class Concentration {
                     cards[index].isMatched = true
                     score += 2
                 } else {
-                    score -= 1
+                    if cards[index].isSeen == true {
+                        score -= 1
+                    }
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
+                cards[index].isSeen = true
             } else {
-                for flipDownIndex in cards.indices {
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
+                cards[index].isSeen = true
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
@@ -46,6 +66,7 @@ class Concentration {
         for index in cards.indices {
             cards[index].isMatched = false
             cards[index].isFaceUp = false
+            cards[index].isSeen = false
         }
         
         cards.shuffle()

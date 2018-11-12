@@ -6,15 +6,12 @@
 //  Copyright © 2018 FAST. All rights reserved.
 //
 
-// sss
-
 import Foundation
 
 class Concentration {
     
-    var cards = [Card]()
-    var indexOfOneAndOnlyFaceUpCard: Int?
-    {
+    private(set) var cards = [Card]()
+    private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
             var foundIndex: Int?
             for index in cards.indices {
@@ -35,10 +32,12 @@ class Concentration {
         }
     }
     
-    var flipCount: Int
-    var score: Int
+    private(set) var flipCount: Int
+    private(set) var score: Int
     
     func chooseCard(at index: Int) {
+        
+        assert(cards.indices.contains(index), "Concentration.chooseCard: (at: \(index)): chosen index not in range")
         
         if !cards[index].isMatched && !cards[index].isFaceUp {
             flipCount += 1
@@ -75,6 +74,9 @@ class Concentration {
     }
     
     init(numberOfPairsOfCards: Int){
+        
+        assert(numberOfPairsOfCards > 0, "Concentration.init: (at: \(numberOfPairsOfCards)): must have atleast 1 pair of cards")
+        
         for _ in 0..<numberOfPairsOfCards {
             let card = Card()
             cards += [card, card]

@@ -29,12 +29,37 @@ class ViewController: UIViewController {
         return self.game.score
     }
     
+    private let attributes: [NSAttributedString.Key: Any] = [
+        .strokeWidth: 5.0,
+        .strokeColor: #colorLiteral(red: 1, green: 0.5746685863, blue: 0, alpha: 1)
+    ]
+    
+    private func updateFlipCountLabel() {
+        let flipsAttributeString = NSAttributedString(string: "Flips:\(flips)", attributes: attributes)
+        
+        flipCountLabel.attributedText = flipsAttributeString
+    }
+    
+    private func updateScoreLabel() {
+        let scoreAttributeString = NSAttributedString(string: "Score:\(score)", attributes: attributes)
+        
+        scoreLabel.attributedText = scoreAttributeString
+    }
+    
     
     @IBOutlet private var cardButtons: [UIButton]!
     
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel! {
+        didSet {
+            updateFlipCountLabel()
+        }
+    }
     
-    @IBOutlet private weak var scoreLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel! {
+        didSet {
+            updateScoreLabel()
+        }
+    }
     
     @IBAction private func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.index(of: sender) {
@@ -57,8 +82,9 @@ class ViewController: UIViewController {
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5746685863, blue: 0, alpha: 0) : #colorLiteral(red: 1, green: 0.5746685863, blue: 0, alpha: 1)
             }
         }
-        flipCountLabel.text = "Flips: \(flips)"
-        scoreLabel.text = "Score: \(score)"
+
+        updateFlipCountLabel()
+        updateScoreLabel()
     }
     
     private var emojiChoices = "🎃👻🦇😱😈🍎🙀👺👹"

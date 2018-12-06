@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ConcentrationViewController: VCLLoggingViewController {
+//class ConcentrationViewController: VCLLoggingViewController {
+class ConcentrationViewController: UIViewController {
     
-    override var vclLoggingName: String {
-        return "Game"
-    }
+//    override var vclLoggingName: String {
+//        return "Game"
+//    }
     
     @IBAction func newGame(_ sender: UIButton) {
         game.startNewGame()

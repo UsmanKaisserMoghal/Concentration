@@ -23,7 +23,7 @@ class ConcentrationViewController: UIViewController {
     private lazy var game = Concentration(numberOfPairsOfCards: noOfPairs)
     
     var noOfPairs: Int {
-        return (cardButtons.count + 1)/2
+        return (visibleCardButtons.count + 1)/2
     }
     
     var flips: Int {
@@ -54,6 +54,15 @@ class ConcentrationViewController: UIViewController {
     
     @IBOutlet private var cardButtons: [UIButton]!
     
+    private var visibleCardButtons: [UIButton]! {
+        return cardButtons?.filter { !$0.superview!.isHidden }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateViewFromModel()
+    }
+    
     @IBOutlet private weak var flipCountLabel: UILabel! {
         didSet {
             updateFlipCountLabel()
@@ -67,7 +76,7 @@ class ConcentrationViewController: UIViewController {
     }
     
     @IBAction private func touchCard(_ sender: UIButton) {
-        if let cardNumber = cardButtons.index(of: sender) {
+        if let cardNumber = visibleCardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
         } else {
@@ -76,9 +85,9 @@ class ConcentrationViewController: UIViewController {
     }
     
     private func updateViewFromModel(){
-        if cardButtons != nil {
-            for index in cardButtons.indices {
-                let button = cardButtons[index]
+        if visibleCardButtons != nil {
+            for index in visibleCardButtons.indices {
+                let button = visibleCardButtons[index]
                 let card = game.cards[index]
                 if card.isFaceUp {
                     button.setTitle(emoji(for: card), for: UIControl.State.normal)

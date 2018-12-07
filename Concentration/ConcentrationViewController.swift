@@ -40,10 +40,19 @@ class ConcentrationViewController: UIViewController {
     ]
     
     private func updateFlipCountLabel() {
-        let flipsAttributeString = NSAttributedString(string: "Flips:\(flips)", attributes: attributes)
+        let flipsAttributeString = NSAttributedString(
+            //string: traitCollection.verticalSizeClass == .compact ? "Flips\n\(flips)" : "Flips:\(flips)"
+            string: "Flips:\(flips)", attributes: attributes
+        )
         
         flipCountLabel.attributedText = flipsAttributeString
     }
+    
+    //  Incase we use alternate method of changing trait for label
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        super.traitCollectionDidChange(previousTraitCollection)
+//        updateFlipCountLabel()
+//    }
     
     private func updateScoreLabel() {
         let scoreAttributeString = NSAttributedString(string: "Score:\(score)", attributes: attributes)
